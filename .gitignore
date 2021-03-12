@@ -1,0 +1,8 @@
+.idea
+.gradle
+*.txt
+*.json
+.gradle/
+*.html
+*.iml
+/target
