@@ -6,3 +6,4 @@
 *.html
 *.iml
 /target
+.md
