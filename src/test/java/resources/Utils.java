@@ -14,7 +14,8 @@ import java.util.Properties;
 public class Utils {
     public static RequestSpecification req;
 
-    public RequestSpecification requestSpecification() throws IOException {
+    public RequestSpecification
+    requestSpecification() throws IOException {
 
         if (req == null) {
             PrintStream log = new PrintStream(new FileOutputStream("logging.txt"));
@@ -30,10 +31,14 @@ public class Utils {
 
     public String getGlobalValues(String key) throws IOException {
         Properties prop = new Properties();
-        FileInputStream fs = new FileInputStream("..\\RestAssuredAPIFrameworkBDD\\src" +
+
+        FileInputStream fs = new FileInputStream("src" +
                 "\\test\\java\\resources\\global.properties");
+
         prop.load(fs);
         return prop.getProperty(key);
+
+
 
     }
 
