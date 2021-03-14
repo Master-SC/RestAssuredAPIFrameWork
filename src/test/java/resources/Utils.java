@@ -7,8 +7,16 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.NumberToTextConverter;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Properties;
 
 public class Utils {
@@ -37,14 +45,52 @@ public class Utils {
 
         prop.load(fs);
         return prop.getProperty(key);
-
-
-
     }
 
     public String getJSONPath(Response response, String path){
         String resp = response.asString();
         JsonPath js = new JsonPath(resp);
         return js.get(path).toString();
+    }
+
+    public ArrayList<String> getDataFromExcelSheet() throws IOException {
+        ArrayList<String> a = new ArrayList<>();
+        FileInputStream fis = new FileInputStream("C:\\Users\\wIN10\\Desktop\\TestingExcel_2.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(fis);
+        int no_of_sheets = workbook.getNumberOfSheets();
+        for (int i=0; i<no_of_sheets;i++){
+
+            if(workbook.getSheetName(i).equalsIgnoreCase("Test")){
+                XSSFSheet sheet = workbook.getSheetAt(i);
+                Iterator<Row> row = sheet.iterator();
+                Row firstRow = row.next();
+                Iterator<Cell> ce = firstRow.cellIterator();
+                int k=0;
+                int column =0;
+
+                while (ce.hasNext()){
+                    Cell firstRowCell = ce.next();
+                    if (firstRowCell.getStringCellValue().equalsIgnoreCase("Test Case")){
+                        column=k;
+                    }
+                    k++;
+                }
+                while (row.hasNext()){
+                    Row r = row.next();
+                    if(r.getCell(column).getStringCellValue().equalsIgnoreCase("Login")){
+                        Iterator<Cell> c = r.cellIterator();
+                        while (c.hasNext()){
+                            Cell ce_val = c.next();
+                            if(ce_val.getCellType()== CellType.STRING){
+                                a.add(ce_val.getStringCellValue());
+                            }else {
+                                a.add(NumberToTextConverter.toText(ce_val.getNumericCellValue()));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return a;
     }
 }
