@@ -56,7 +56,7 @@ public class Utils {
     public ArrayList<String> getDataFromExcelSheet(String sheetName,String columnName, String rowName)
             throws IOException {
         ArrayList<String> a = new ArrayList<>();
-        FileInputStream fis = new FileInputStream("C:\\Users\\wIN10\\Desktop\\TestingExcel_2.xlsx");
+        FileInputStream fis = new FileInputStream(getGlobalValues("XLSXFileLocation"));
         XSSFWorkbook workbook = new XSSFWorkbook(fis);
         int no_of_sheets = workbook.getNumberOfSheets();
         for (int i=0; i<no_of_sheets;i++){
