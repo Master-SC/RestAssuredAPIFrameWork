@@ -3,7 +3,9 @@ package resources;
 import pojo.AddPlaceAPI.AddPlaceAPIRequest;
 import pojo.AddPlaceAPI.Location;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TestDataBuild {
@@ -31,5 +33,30 @@ public class TestDataBuild {
         return "{\n" +
                 "    \"place_id\":\""+place_id+"\"\n" +
                 "}";
+    }
+
+    public HashMap<String, Object> addPlacePayLoadFromExcel(String sheetName, String columnName, String rowName )
+            throws IOException {
+        HashMap<String, Object> mapData = new HashMap<>();
+
+        Utils ut = new Utils();
+        ArrayList<String> alist =ut.getDataFromExcelSheet(sheetName, columnName, rowName);
+
+        HashMap<String,Object> location= new HashMap<>();
+        location.put("lat",alist.get(1));
+        location.put("lng",alist.get(2));
+        mapData.put("location",location);
+        mapData.put("accuracy",alist.get(3));
+        mapData.put("name",alist.get(4));
+        mapData.put("phone_number",alist.get(5));
+        mapData.put("address",alist.get(6));
+        mapData.put("website",alist.get(7));
+        mapData.put("language",alist.get(8));
+        ArrayList<String> types = new ArrayList<>();
+        types.add(alist.get(9));
+        types.add(alist.get(10));
+        mapData.put("types",types);
+
+        return mapData;
     }
 }

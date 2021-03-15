@@ -117,4 +117,10 @@ public class stepDefinations extends Utils {
         the_user_creates_request_specification_for_api_requests();
         request = GenericRequest.queryParam("place_id",place_id);
     }
+    @Given("Add Place Payload is generated from Excel sheet Sheet {string} Column {string} Row {string}")
+    public void add_place_payload_is_generated_from_excel_sheet(String sheet, String Column, String Row)
+            throws IOException {
+        request = GenericRequest.
+                body(data.addPlacePayLoadFromExcel(sheet,Column,Row));
+    }
 }

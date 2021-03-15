@@ -24,3 +24,37 @@ Feature: Google Place API
     When User calls the "getPlaceAPI" with "get" http request
     Then The API call got successful with status code 404
     And The "msg" in the response body should be "Get operation failed, looks like place_id  doesn't exists"
+
+  @PlaceAPIExcelDataDrivenTest
+  Scenario Outline: Verify a Place is added using Add Place API from Excel Data.
+    Given The user creates Generic RequestSpecification for API Requests
+    And Add Place Payload is generated from Excel sheet Sheet "AddPlaceAPIData" Column "TestData" Row "<Data Set>"
+    When User calls the "addPlaceAPI" with "post" http request
+    Then The API call got successful with status code 200
+    And The "status" in the response body should be "OK"
+    And The user saves the "place_id" from the response
+    And The user deletes the place created using the "deletePlaceAPI"
+    And The API call got successful with status code 200
+    And The "status" in the response body should be "OK"
+    Examples:
+    |Data Set|
+    |DataSet1|
+    |DataSet2|
+    |DataSet3|
+    |DataSet4|
+    |DataSet5|
+    |DataSet6|
+    |DataSet7|
+    |DataSet8|
+    |DataSet9|
+    |DataSet10|
+    |DataSet11|
+    |DataSet12|
+    |DataSet13|
+    |DataSet14|
+    |DataSet15|
+    |DataSet16|
+    |DataSet17|
+    |DataSet18|
+    |DataSet19|
+
