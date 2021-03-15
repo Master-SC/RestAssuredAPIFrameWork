@@ -53,14 +53,15 @@ public class Utils {
         return js.get(path).toString();
     }
 
-    public ArrayList<String> getDataFromExcelSheet() throws IOException {
+    public ArrayList<String> getDataFromExcelSheet(String sheetName,String columnName, String rowName)
+            throws IOException {
         ArrayList<String> a = new ArrayList<>();
         FileInputStream fis = new FileInputStream("C:\\Users\\wIN10\\Desktop\\TestingExcel_2.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fis);
         int no_of_sheets = workbook.getNumberOfSheets();
         for (int i=0; i<no_of_sheets;i++){
 
-            if(workbook.getSheetName(i).equalsIgnoreCase("Test")){
+            if(workbook.getSheetName(i).equalsIgnoreCase(sheetName)){
                 XSSFSheet sheet = workbook.getSheetAt(i);
                 Iterator<Row> row = sheet.iterator();
                 Row firstRow = row.next();
@@ -70,14 +71,14 @@ public class Utils {
 
                 while (ce.hasNext()){
                     Cell firstRowCell = ce.next();
-                    if (firstRowCell.getStringCellValue().equalsIgnoreCase("Test Case")){
+                    if (firstRowCell.getStringCellValue().equalsIgnoreCase(columnName)){
                         column=k;
                     }
                     k++;
                 }
                 while (row.hasNext()){
                     Row r = row.next();
-                    if(r.getCell(column).getStringCellValue().equalsIgnoreCase("Login")){
+                    if(r.getCell(column).getStringCellValue().equalsIgnoreCase(rowName)){
                         Iterator<Cell> c = r.cellIterator();
                         while (c.hasNext()){
                             Cell ce_val = c.next();
