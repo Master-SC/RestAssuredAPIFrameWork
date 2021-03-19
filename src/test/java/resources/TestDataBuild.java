@@ -59,4 +59,24 @@ public class TestDataBuild {
 
         return mapData;
     }
+
+    public HashMap<String, Object> addNewJiraCommentData(String comment){
+        HashMap<String, Object> hmp = new HashMap<>();
+        HashMap<String, Object> bMap = new HashMap<>();
+        hmp.put("body", bMap);
+        bMap.put("type","doc");
+        bMap.put("version",1);
+        ArrayList<HashMap<String, Object>> content = new ArrayList<>();
+        bMap.put("content",content);
+        HashMap<String, Object> cMap = new HashMap<>();
+        content.add(cMap);
+        cMap.put("type","paragraph");
+        ArrayList<HashMap<String, Object>> typeArray = new ArrayList<>();
+        cMap.put("content", typeArray);
+        HashMap<String, Object> contMap = new HashMap<>();
+        typeArray.add(contMap);
+        contMap.put("text",comment);
+        contMap.put("type","text");
+        return hmp;
+    }
 }
